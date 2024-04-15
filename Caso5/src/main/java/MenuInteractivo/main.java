@@ -98,14 +98,66 @@ public class main {
         });
 
 // Botón para HerramientasAnalisisNumerico
-        JButton herramientasAnalisisNumericoButton = new JButton("HerramientasAnalisisNumerico");
-        herramientasAnalisisNumericoButton.setBounds(10, 160, 250, 25);
-        panel.add(herramientasAnalisisNumericoButton);
+        JButton btnHerramientasAnalisisNumerico = new JButton("HerramientasAnalisisNumerico");
+        btnHerramientasAnalisisNumerico.setBounds(10, 340, 250, 25);
+        panel.add(btnHerramientasAnalisisNumerico);
 
-        herramientasAnalisisNumericoButton.addActionListener(new ActionListener() {
+        btnHerramientasAnalisisNumerico.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para interactuar con la clase HerramientasAnalisisNumerico
+                JDialog dialog = new JDialog();
+                dialog.setTitle("Herramientas de Análisis Numérico");
+                dialog.setSize(300, 400);
+                dialog.setLayout(null);
+
+                JButton btnSumatoria = new JButton("Sumatoria");
+                btnSumatoria.setBounds(50, 10, 200, 25);
+                dialog.add(btnSumatoria);
+
+                btnSumatoria.addActionListener(e1 -> {
+                    String input = JOptionPane.showInputDialog("Introduce un número:");
+                    try {
+                        int n = Integer.parseInt(input);
+                        int resultado = HerramientasAnalisisNumerico.sumatoria(n);
+                        JOptionPane.showMessageDialog(null, "La sumatoria de " + n + " es: " + resultado);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido.");
+                    }
+                });
+
+                JButton btnListarNumeros = new JButton("Listar Números");
+                btnListarNumeros.setBounds(50, 50, 200, 25);
+                dialog.add(btnListarNumeros);
+
+                // Implementa la acción de este botón según tu necesidad
+
+                JButton btnCalcularPotencia = new JButton("Calcular Potencia");
+                btnCalcularPotencia.setBounds(50, 90, 200, 25);
+                dialog.add(btnCalcularPotencia);
+
+                btnCalcularPotencia.addActionListener(e12 -> {
+                    String baseStr = JOptionPane.showInputDialog("Introduce la base:");
+                    String exponenteStr = JOptionPane.showInputDialog("Introduce el exponente:");
+                    try {
+                        int base = Integer.parseInt(baseStr);
+                        int exponente = Integer.parseInt(exponenteStr);
+                        int resultado = HerramientasAnalisisNumerico.calcularPotencia(base, exponente);
+                        JOptionPane.showMessageDialog(null, "El resultado de " + base + "^" + exponente + " es: " + resultado);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Por favor, introduce números válidos.");
+                    } catch (IllegalArgumentException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+                });
+
+                JButton btnEncontrarMaximo = new JButton("Encontrar Máximo");
+                btnEncontrarMaximo.setBounds(50, 130, 200, 25);
+                dialog.add(btnEncontrarMaximo);
+
+                // Implementa la acción de este botón según tu necesidad
+
+                dialog.setLocationRelativeTo(null); // Centrar el dialog respecto a la aplicación
+                dialog.setVisible(true);
             }
         });
 
