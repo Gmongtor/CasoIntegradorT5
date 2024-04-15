@@ -1,4 +1,4 @@
-package AnalisisGenomico;
+package MenuInteractivo.AnalisisGenomico;
 
 import java.util.ArrayList;
 import java.util.List;

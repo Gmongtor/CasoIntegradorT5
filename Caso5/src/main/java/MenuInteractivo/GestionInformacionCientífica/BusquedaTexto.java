@@ -1,4 +1,4 @@
-package GestionInformacionCientífica;
+package MenuInteractivo.GestionInformacionCientífica;
 
 public class BusquedaTexto {
 

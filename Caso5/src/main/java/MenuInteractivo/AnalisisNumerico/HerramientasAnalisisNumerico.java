@@ -1,4 +1,4 @@
-package AnalisisNumerico;
+package MenuInteractivo.AnalisisNumerico;
 
 public class HerramientasAnalisisNumerico {
 

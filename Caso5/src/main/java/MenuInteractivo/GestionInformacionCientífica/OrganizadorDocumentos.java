@@ -1,4 +1,4 @@
-package GestionInformacionCientífica;
+package MenuInteractivo.GestionInformacionCientífica;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package AnalisisGenomico;
+package MenuInteractivo.AnalisisGenomico;
 
 public class GeneCounter {
     public static int contarGenes(String adn) {

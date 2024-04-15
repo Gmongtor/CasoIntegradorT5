@@ -1,4 +1,4 @@
-package Optimizacion;
+package MenuInteractivo.Optimizacion;
 public class QuickSortOptimizado {
 
     private static int hacerParticion(int[] datos, int primerElemento, int ultimoElemento) {
