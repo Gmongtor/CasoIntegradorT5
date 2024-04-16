@@ -175,7 +175,6 @@ public class main {
                 btnListarNumeros.setBounds(50, 50, 200, 25);
                 dialog.add(btnListarNumeros);
 
-                // Implementa la acción de este botón según tu necesidad
 
                 JButton btnCalcularPotencia = new JButton("Calcular Potencia");
                 btnCalcularPotencia.setBounds(50, 90, 200, 25);
@@ -199,10 +198,7 @@ public class main {
                 JButton btnEncontrarMaximo = new JButton("Encontrar Máximo");
                 btnEncontrarMaximo.setBounds(50, 130, 200, 25);
                 dialog.add(btnEncontrarMaximo);
-
-                // Implementa la acción de este botón según tu necesidad
-
-                dialog.setLocationRelativeTo(null); // Centrar el dialog respecto a la aplicación
+                dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
             }
         });
@@ -215,7 +211,12 @@ public class main {
         quickSortOptimizadoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para interactuar con la clase QuickSortOptimizado
+        String input = JOptionPane.showInputDialog("Introduce los números separados por comas:");
+                int[] datos = Arrays.stream(input.split(","))
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
+                QuickSortOptimizado.quickSort(datos, 0, datos.length - 1);
+                JOptionPane.showMessageDialog(null, "Datos ordenados: " + Arrays.toString(datos));
             }
         });
     }
