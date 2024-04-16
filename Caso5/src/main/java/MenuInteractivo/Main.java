@@ -6,6 +6,7 @@ import MenuInteractivo.AnalisisNumerico.HerramientasAnalisisNumerico;
 import MenuInteractivo.GestionInformacionCientífica.BusquedaTexto;
 import MenuInteractivo.GestionInformacionCientífica.GestionFechas;
 import MenuInteractivo.GestionInformacionCientífica.OrganizadorDocumentos;
+import MenuInteractivo.Optimizacion.QuickSortOptimizado;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +46,10 @@ public class Main {
         JButton gestorInformacionButton = new JButton("Gestor de Información Científica");
         panel.add(gestorInformacionButton);
         gestorInformacionButton.addActionListener(e -> handleGestorInformacionCientifica());
+
+        JButton quickSortButton = new JButton("QuickSort Optimizado");
+        panel.add(quickSortButton);
+        quickSortButton.addActionListener(e -> handleQuickSortOptimizado());
     }
 
     private static void handleAnalisisGenomico() {
@@ -249,6 +254,21 @@ public class Main {
 
         dialog.pack();
         dialog.setVisible(true);
+    }
+    private static void handleQuickSortOptimizado() {
+        String input = JOptionPane.showInputDialog("Introduce los números separados por comas:");
+        if (input != null && !input.isEmpty()) {
+            try {
+                int[] datos = Arrays.stream(input.split(","))
+                        .map(String::trim)
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
+                QuickSortOptimizado.quickSort(datos, 0, datos.length - 1);
+                JOptionPane.showMessageDialog(null, "Datos ordenados: " + Arrays.toString(datos));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, introduce solo números separados por comas.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
 
