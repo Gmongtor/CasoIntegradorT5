@@ -25,7 +25,7 @@ public class OrganizadorDocumentos {
         writer.close();
     }
 
-    public static void buscarEnDocumento(String path, String palabra) {
+    public static boolean buscarEnDocumento(String path, String palabra) {
         try {
             BufferedReader reader = new BufferedReader
                     (new FileReader(path));
@@ -41,22 +41,6 @@ public class OrganizadorDocumentos {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void ordenarDocumento(String path) {
-        try {
-            BufferedReader reader = new BufferedReader
-                    (new FileReader(path));
-            ArrayList<String> lineas = new ArrayList<>();
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                lineas.add(linea);
-            }
-            reader.close();
-    } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return false;
     }
 }

@@ -1,29 +1,32 @@
 package MenuInteractivo.GestionInformacionCientífica;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class GestionFechas {
 
-    private ArrayList<LocalDate> fechas = new ArrayList<>();
+    private List<LocalDate> fechas;
+
+    public GestionFechas() {
+        this.fechas = new ArrayList<>();
+    }
 
     public void agregarFecha(LocalDate fecha) {
-        fechas.add(fecha);
-        Collections.sort(fechas);
-    }
-
-    public void listarFechas() {
-        for (LocalDate fecha : fechas) {
-            System.out.println(fecha);
+        if (!fechas.contains(fecha)) {
+            fechas.add(fecha);
+            Collections.sort(fechas);
         }
     }
 
-    public List<String> obtenerFechas() {
-        List<String> fechasString = new ArrayList<>();
-        for (LocalDate fecha : fechas) {
-            fechasString.add(fecha.toString());
-        }
-        return fechasString;
+    public boolean eliminarFecha(LocalDate fecha) {
+        return fechas.remove(fecha);
+    }
+
+    public List<LocalDate> obtenerFechas() {
+        return fechas;
     }
 }
+
 

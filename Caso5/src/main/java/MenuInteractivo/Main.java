@@ -3,10 +3,18 @@ package MenuInteractivo;
 import MenuInteractivo.AnalisisGenomico.GeneCounter;
 import MenuInteractivo.AnalisisGenomico.GeneticCombinations;
 import MenuInteractivo.AnalisisNumerico.HerramientasAnalisisNumerico;
+import MenuInteractivo.GestionInformacionCientífica.BusquedaTexto;
+import MenuInteractivo.GestionInformacionCientífica.GestionFechas;
+import MenuInteractivo.GestionInformacionCientífica.OrganizadorDocumentos;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +39,10 @@ public class Main {
         JButton herramientasCientificasButton = new JButton("Herramientas Análisis Numérico");
         panel.add(herramientasCientificasButton);
         herramientasCientificasButton.addActionListener(e -> handleHerramientasAnalisisNumerico());
+
+        JButton gestorInformacionButton = new JButton("Gestor de Información Científica");
+        panel.add(gestorInformacionButton);
+        gestorInformacionButton.addActionListener(e -> handleGestorInformacionCientifica());
     }
 
     private static void handleAnalisisGenomico() {
@@ -116,7 +128,75 @@ public class Main {
         int[] datos = Arrays.stream(datosStr).mapToInt(Integer::parseInt).toArray();
         JOptionPane.showMessageDialog(null, "El máximo es: " + HerramientasAnalisisNumerico.encontrarMaximo(datos, 0));
     }
+    private static void handleGestorInformacionCientifica() {
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Gestor de Información Científica");
+        dialog.setLayout(new GridLayout(0, 1));
+        dialog.setSize(350, 400);
+
+        JButton ordenarDocumentoButton = new JButton("Ordenar Documento");
+        dialog.add(ordenarDocumentoButton);
+        ordenarDocumentoButton.addActionListener(e -> ordenarDocumento());
+
+        JButton buscarEnDocumentoButton = new JButton("Buscar en Documento");
+        dialog.add(buscarEnDocumentoButton);
+        buscarEnDocumentoButton.addActionListener(e -> buscarEnDocumento());
+
+        JButton btnBusquedaLineal = new JButton("Búsqueda Lineal en Documento");
+        dialog.add(btnBusquedaLineal);
+        btnBusquedaLineal.addActionListener(e -> buscarLinealEnDocumento());
+
+        JButton btnBusquedaBinaria = new JButton("Búsqueda Binaria en Documento");
+        dialog.add(btnBusquedaBinaria);
+        btnBusquedaBinaria.addActionListener(e -> buscarBinariaEnDocumento());
+
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
+    private static void ordenarDocumento() {
+        String path = JOptionPane.showInputDialog("Ruta del documento a ordenar:");
+        try {
+            OrganizadorDocumentos.ordenarArchivo(path);
+            JOptionPane.showMessageDialog(null, "Documento ordenado con éxito.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ordenar el documento: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private static void buscarEnDocumento() {
+        String path = JOptionPane.showInputDialog("Ruta del documento para buscar:");
+        String palabra = JOptionPane.showInputDialog("Palabra a buscar:");
+        boolean encontrado = OrganizadorDocumentos.buscarEnDocumento(path, palabra);
+        JOptionPane.showMessageDialog(null, encontrado ? "Palabra encontrada" : "Palabra no encontrada");
+    }
+    private static void buscarLinealEnDocumento() {
+        try {
+            String path = JOptionPane.showInputDialog("Ruta del documento:");
+            String palabra = JOptionPane.showInputDialog("Palabra a buscar:");
+            List<String> lineas = Files.readAllLines(Paths.get(path));
+            boolean encontrado = BusquedaTexto.busquedaLineal(lineas.toArray(new String[0]), palabra);
+            JOptionPane.showMessageDialog(null, "Búsqueda Lineal: Palabra " + (encontrado ? "encontrada" : "no encontrada"));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo.");
+        }
+    }
+
+    private static void buscarBinariaEnDocumento() {
+        try {
+            String path = JOptionPane.showInputDialog("Ruta del documento ordenado:");
+            String palabra = JOptionPane.showInputDialog("Palabra a buscar:");
+            List<String> lineas = Files.readAllLines(Paths.get(path));
+            Collections.sort(lineas); // Asegurar que esté ordenado para la búsqueda binaria
+            boolean encontrado = BusquedaTexto.busquedaBinaria(lineas.toArray(new String[0]), palabra);
+            JOptionPane.showMessageDialog(null, "Búsqueda Binaria: Palabra " + (encontrado ? "encontrada" : "no encontrada"));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo.");
+        }
+    }
 }
+
+
 
 
 
