@@ -40,5 +40,6 @@ public class HerramientasAnalisisNumerico {
         int maximoResto = encontrarMaximo(datos, indice + 1);
         return Math.max(datos[indice], maximoResto);
     }
+
 }
 
