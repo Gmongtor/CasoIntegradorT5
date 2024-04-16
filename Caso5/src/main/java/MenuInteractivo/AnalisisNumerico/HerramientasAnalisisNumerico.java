@@ -9,13 +9,14 @@ public class HerramientasAnalisisNumerico {
         return n + sumatoria(n - 1);
     }
 
-    public static void listarNumeros(int inicio, int fin) {
-        if (inicio > fin) {
-            return;
+    public static String listarNumeros(int inicio, int fin) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = inicio; i <= fin; i++) {
+            sb.append(i).append('\n');
         }
-        System.out.println(inicio);
-        listarNumeros(inicio + 1, fin);
+        return sb.toString();
     }
+
 
     public static int calcularPotencia(int base, int exponente) {
         if (exponente < 0) {
