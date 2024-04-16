@@ -17,5 +17,13 @@ public class GestionFechas {
             System.out.println(fecha);
         }
     }
+
+    public List<String> obtenerFechas() {
+        List<String> fechasString = new ArrayList<>();
+        for (LocalDate fecha : fechas) {
+            fechasString.add(fecha.toString());
+        }
+        return fechasString;
+    }
 }
 

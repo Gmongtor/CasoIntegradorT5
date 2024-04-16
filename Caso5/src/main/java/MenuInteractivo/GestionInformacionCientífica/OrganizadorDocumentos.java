@@ -24,4 +24,39 @@ public class OrganizadorDocumentos {
         }
         writer.close();
     }
+
+    public static void buscarEnDocumento(String path, String palabra) {
+        try {
+            BufferedReader reader = new BufferedReader
+                    (new FileReader(path));
+            String linea;
+            int numeroLinea = 1;
+            while ((linea = reader.readLine()) != null) {
+                if (linea.contains(palabra)) {
+                    System.out.println("Palabra encontrada en la línea " + numeroLinea + ": " + linea);
+                }
+                numeroLinea++;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ordenarDocumento(String path) {
+        try {
+            BufferedReader reader = new BufferedReader
+                    (new FileReader(path));
+            ArrayList<String> lineas = new ArrayList<>();
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                lineas.add(linea);
+            }
+            reader.close();
+    } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

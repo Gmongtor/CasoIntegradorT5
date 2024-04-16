@@ -8,10 +8,12 @@ import MenuInteractivo.GestionInformacionCientífica.OrganizadorDocumentos;
 import MenuInteractivo.AnalisisNumerico.HerramientasAnalisisNumerico;
 import MenuInteractivo.Optimizacion.QuickSortOptimizado;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,31 +63,7 @@ public class main {
                 JOptionPane.showMessageDialog(null, "Las combinaciones de genes son: " + combinations);
             }
         });
-        JButton gestionFechasButton = new JButton("GestionFechas");
-        gestionFechasButton.setBounds(10, 70, 150, 25);
-        panel.add(gestionFechasButton);
-
-        gestionFechasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GestionFechas gestionFechas = new GestionFechas();
-                // Aquí puedes agregar la lógica para interactuar con la clase GestionFechas
-            }
-        });
-
-// Botón para BusquedaTexto
-        JButton busquedaTextoButton = new JButton("BusquedaTexto");
-        busquedaTextoButton.setBounds(10, 100, 150, 25);
-        panel.add(busquedaTextoButton);
-
-        busquedaTextoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para interactuar con la clase BusquedaTexto
-            }
-        });
-
-// Botón para OrganizadorDocumentos
+        // Botón para OrganizadorDocumentos
         JButton organizadorDocumentosButton = new JButton("OrganizadorDocumentos");
         organizadorDocumentosButton.setBounds(10, 130, 200, 25);
         panel.add(organizadorDocumentosButton);
@@ -93,9 +71,77 @@ public class main {
         organizadorDocumentosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para interactuar con la clase OrganizadorDocumentos
+                JDialog dialog = new JDialog();
+                dialog.setTitle("Gestión de Información Científica");
+                dialog.setSize(300, 400);
+                dialog.setLayout(null);
+
+                JButton btnOrdenarDocumento = new JButton("Ordenar Documento");
+                btnOrdenarDocumento.setBounds(50, 10, 200, 25);
+                dialog.add(btnOrdenarDocumento);
+
+                btnOrdenarDocumento.addActionListener(e1 -> {
+                    String path = JOptionPane.showInputDialog("Ruta del documento a ordenar:");
+                    OrganizadorDocumentos.ordenarDocumento(path);
+                    JOptionPane.showMessageDialog(null, "Documento ordenado con éxito.");
+                });
+
+                JButton btnBuscarEnDocumento = new JButton("Buscar en Documento");
+                btnBuscarEnDocumento.setBounds(50, 50, 200, 25);
+                dialog.add(btnBuscarEnDocumento);
+
+                btnBuscarEnDocumento.addActionListener(e12 -> {
+                    String path = JOptionPane.showInputDialog("Ruta del documento para buscar:");
+                    String palabra = JOptionPane.showInputDialog("Palabra a buscar en el documento:");
+                    OrganizadorDocumentos.buscarEnDocumento(path, palabra);
+                    // Mostrar resultado de la búsqueda
+                });
+
+                // Agrega aquí más botones para otras funcionalidades de OrganizadorDocumentos
+                JButton gestionFechasButton = new JButton("GestionFechas");
+                gestionFechasButton.setBounds(10, 70, 150, 25);
+                panel.add(gestionFechasButton);
+
+                gestionFechasButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JDialog dialog = new JDialog();
+                        dialog.setTitle("Gestión de Fechas");
+                        dialog.setSize(300, 400);
+                        dialog.setLayout(null);
+
+                        GestionFechas gestionFechas = new GestionFechas(); // Instancia de la clase GestionFechas
+
+                        JButton btnAgregarFecha = new JButton("Agregar Fecha");
+                        btnAgregarFecha.setBounds(50, 10, 200, 25);
+                        dialog.add(btnAgregarFecha);
+
+                        btnAgregarFecha.addActionListener(e1 -> {
+                            String fecha = JOptionPane.showInputDialog("Introduce una fecha (formato AAAA-MM-DD):");
+                            gestionFechas.agregarFecha(LocalDate.parse(fecha));
+                            JOptionPane.showMessageDialog(null, "Fecha agregada con éxito.");
+                        });
+
+                        JButton btnListarFechas = new JButton("Listar Fechas");
+                        btnListarFechas.setBounds(50, 50, 200, 25);
+                        dialog.add(btnListarFechas);
+
+                        btnListarFechas.addActionListener(e12 -> {
+                            List<String> fechas = gestionFechas.obtenerFechas();
+                            JOptionPane.showMessageDialog(null, "Fechas:\n" + String.join("\n", fechas));
+                        });
+
+                        dialog.setLocationRelativeTo(null); // Centra el diálogo respecto a la aplicación
+                        dialog.setVisible(true);
+                    }
+                });
+                dialog.setLocationRelativeTo(null); // Centra el diálogo respecto a la aplicación
+                dialog.setVisible(true);
             }
         });
+
+
+
 
 // Botón para HerramientasAnalisisNumerico
         JButton btnHerramientasAnalisisNumerico = new JButton("HerramientasAnalisisNumerico");
