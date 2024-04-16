@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -150,6 +152,10 @@ public class Main {
         dialog.add(btnBusquedaBinaria);
         btnBusquedaBinaria.addActionListener(e -> buscarBinariaEnDocumento());
 
+        JButton gestorFechasButton = new JButton("Gestor de Fechas");
+        dialog.add(gestorFechasButton);
+        gestorFechasButton.addActionListener(e -> handleGestorFechas());
+
         dialog.pack();
         dialog.setVisible(true);
     }
@@ -193,6 +199,56 @@ public class Main {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al leer el archivo.");
         }
+    }
+    private static void handleGestorFechas() {
+        GestionFechas gestionFechas = new GestionFechas();
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Gestor de Fechas");
+        dialog.setLayout(new GridLayout(0, 1));
+        dialog.setSize(350, 200);
+
+        JButton agregarFechaButton = new JButton("Agregar Fecha");
+        dialog.add(agregarFechaButton);
+        agregarFechaButton.addActionListener(e -> {
+            String fechaStr = JOptionPane.showInputDialog("Introduce una fecha (formato AAAA-MM-DD):");
+            try {
+                LocalDate fecha = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                gestionFechas.agregarFecha(fecha);
+                JOptionPane.showMessageDialog(null, "Fecha agregada.");
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(null, "Formato de fecha no válido.");
+            }
+        });
+
+        JButton eliminarFechaButton = new JButton("Eliminar Fecha");
+        dialog.add(eliminarFechaButton);
+        eliminarFechaButton.addActionListener(e -> {
+            String fechaStr = JOptionPane.showInputDialog("Introduce la fecha a eliminar (formato AAAA-MM-DD):");
+            try {
+                LocalDate fecha = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                if (gestionFechas.eliminarFecha(fecha)) {
+                    JOptionPane.showMessageDialog(null, "Fecha eliminada.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "La fecha no se encontró.");
+                }
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(null, "Formato de fecha no válido.");
+            }
+        });
+
+        JButton listarFechasButton = new JButton("Listar Fechas");
+        dialog.add(listarFechasButton);
+        listarFechasButton.addActionListener(e -> {
+            List<LocalDate> fechas = gestionFechas.obtenerFechas();
+            StringBuilder fechasStr = new StringBuilder("Fechas:\n");
+            for (LocalDate fecha : fechas) {
+                fechasStr.append(fecha.toString()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, fechasStr.toString());
+        });
+
+        dialog.pack();
+        dialog.setVisible(true);
     }
 }
 
